@@ -2,11 +2,20 @@
   (:use [noir.core :only [defpartial]]
         [hiccup.page-helpers :only [include-css html5]]))
 
-(defpartial layout [& content]
+(defpartial main-layout [info content]
             (html5
               [:head
-               [:title "daruma"]
-               (include-css "/css/reset.css")]
+               [:title "daruma"]]
               [:body
                [:div#wrapper
-                content]]))
+                [:div.content
+                 [:div#header
+                  [:h1 (info :title)]]
+                 [:div#content
+                  (map article content)]]]]))
+
+(defpartial article [{:keys [title body date]}]
+  [:article
+   [:h2 title]
+   [:div {:class "body"} body]
+   [:div {:class "info"} date]])

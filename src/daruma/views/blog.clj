@@ -6,4 +6,4 @@
         [hiccup.core :only [html]]))
 
 (defpage "/" []
-  (posts/get-page 1))
+  (common/main-layout (posts/get-page 1)))

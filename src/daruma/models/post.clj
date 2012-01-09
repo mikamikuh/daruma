@@ -23,3 +23,17 @@
   (insert! :posts {:title title
                    :body body
                    :date (clt-format/unparse date-format (clt-core/now))}))
+
+(defn init-info []
+  (insert! :info {:title "New Blog"}))
+
+(defn get-info []
+  (let [info (fetch-one :info)]
+        (if (nil? info)
+          (do (init-info) (fetch-one :info))
+          info)))
+
+(defn set-info [update-data]
+  (let [info (get-info)]
+    (do (update! :info info (merge info update-data)) info)))
+
