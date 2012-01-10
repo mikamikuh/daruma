@@ -1,0 +1,21 @@
+(ns daruma.views.admin
+  (:use noir.core
+        hiccup.core
+        hiccup.page-helpers
+        hiccup.form-helpers)
+  (:require [noir.session :as session]
+            [noir.validation :as vali]
+            [noir.response :as resp]
+            [daruma.models.post :as posts]
+            [daruma.models.user :as users]))
+
+
+(defpage "/login" {:as user}
+  (if (users/admin?)
+    (resp/redirect "/admin")
+    (common/main-layout
+     (form-to [:post "/login"]
+              [:ul.actions
+               [:li (link-to {:class "submit"} "/" "Login")]]
+              (user-fields user)
+              (submit-button {:class "submit"} "submit")))))

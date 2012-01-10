@@ -1,5 +1,6 @@
 (ns daruma.models.post
-  (:require [clj-time.core :as clt-core]
+  (:require [noir.util.crypt :as crypt]
+            [clj-time.core :as clt-core]
             [clj-time.format :as clt-format])
   (:use somnium.congomongo))
 
@@ -37,3 +38,13 @@
   (let [info (get-info)]
     (do (update! :info info (merge info update-data)) (get-info))))
 
+(defn get-user [username]
+  (let [user (fetch :users
+                    :where {:name username})]
+    (first
+     (if (empty? user)
+       (do
+         (insert! :users {:name username :password (crypt/encrypt "admin")})
+         (fetch :users
+                :where {:name username}))
+       user))))
