@@ -35,5 +35,5 @@
 
 (defn set-info [update-data]
   (let [info (get-info)]
-    (do (update! :info info (merge info update-data)) info)))
+    (do (update! :info info (merge info update-data)) (get-info))))
 

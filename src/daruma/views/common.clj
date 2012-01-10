@@ -12,7 +12,7 @@
                  [:div#header
                   [:h1 (info :title)]]
                  [:div#content
-                  (map article content)]]]]))
+                  content]]]]))
 
 (defpartial article [{:keys [title body date]}]
   [:article
